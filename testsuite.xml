@@ -1,0 +1,24 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Test Suite #1 - All Tests">
+    <test verbose="2" name="JsonParser Tests">
+        <parameter name="cartName" value="andrew-cart"/>
+        <classes>
+            <class name="parser.JsonParserTest"/>
+        </classes>
+    </test>
+    <test verbose="2" name="Real Item Tests">
+        <classes>
+            <class name="shop.RealItemTest"/>
+        </classes>
+    </test>
+    <test verbose="2" name="Virtual Item Tests">
+        <classes>
+            <class name="shop.VirtualItemTest"/>
+        </classes>
+    </test>
+    <test verbose="2" name="Cart Tests">
+        <classes>
+            <class name="shop.CartTest"/>
+        </classes>
+    </test>
+</suite>

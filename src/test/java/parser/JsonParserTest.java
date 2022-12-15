@@ -1,27 +1,28 @@
 package parser;
 
 import com.google.gson.JsonSyntaxException;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.testng.annotations.*;
+import org.testng.asserts.SoftAssert;
 import shop.Cart;
 
 import java.io.File;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.testng.Assert.*;
 
-@Tag("JsonParserTest")
-@DisplayName("JsonParser Class Tests")
 class JsonParserTest {
     Parser parser;
 
-    @BeforeEach
+    @BeforeMethod
     public void setup() {
         parser = new JsonParser();
     }
 
-    @DisplayName("Should Write To File")
-    @Test
+    @DataProvider(name = "dummyFilePath")
+    public Object[][] dummyFileProvider() {
+        return new Object[][]{{""}, {"file"}, {"file.json"}, {"file.txt"}, {" file "}};
+    }
+
+    @Test(groups = {"JsonParserTest"})
     public void shouldWriteToFile() {
         Cart cart = new Cart("test-cart");
         parser.writeToFile(cart);
@@ -33,9 +34,8 @@ class JsonParserTest {
         file.deleteOnExit();
     }
 
-    @DisplayName("Should Read From File")
-    @ParameterizedTest
-    @ValueSource(strings = {"andrew-cart", "eugen-cart"})
+    @Parameters("cartName")
+    @Test(groups = {"JsonParserTest"})
     public void shouldReadFromFile(String cartName) {
         Cart cart = parser.readFromFile(new File("src/test/resources/" + cartName + ".json"));
         // checking that cart name is the same
@@ -43,46 +43,65 @@ class JsonParserTest {
     }
 
     // NoSuchFileException Test with 5 datasets
-    @DisplayName("Should Throw NoSuchFileException")
-    @ParameterizedTest
-    @ValueSource(strings = {"", "file", "file.json", "file.txt", " file "})
+    @Test(dataProvider = "dummyFilePath", groups = {"JsonParserTest", "ExceptionsTest"})
     public void shouldThrowNoSuchFileException(String fileName) {
-        assertThrows(NoSuchFileException.class,
-                () -> parser.readFromFile(new File("src/test/resources/" + fileName)));
+        assertThrows(NoSuchFileException.class, () -> parser.readFromFile(new File("src/test/resources/" + fileName)));
     }
 
-    // Testing Exception Message using nested group assertion
+    // Testing Exception Message
     // Decided to disable this test
-    @Disabled
-    @DisplayName("Exception Message Test")
-    @Test
+    @Ignore
+    @Test(groups = {"JsonParserTest", "ExceptionsTest"})
     public void shouldMatchExceptionMessage() {
+        SoftAssert softAssert = new SoftAssert();
         String fileName = "dummy";
         String expectedErrorMessage = "File " + fileName + ".json not found!";
-        assertAll("TestExceptionThrown",
-                () -> {
-                    Exception exception = assertThrows(NoSuchFileException.class,
-                            () -> parser.readFromFile(new File(fileName)));
 
-                    assertAll("TestExceptionMessage",
-                            () -> assertEquals(expectedErrorMessage, exception.getMessage())
-                    );
-                }
-        );
+        try {
+            parser.readFromFile(new File(fileName));
+            // make the test fail if exception is thrown
+            softAssert.fail("NoSuchFileException was not thrown");
+        } catch (NoSuchFileException e) {
+            // NoSuchFileException occurred and got caught
+            // checking if the exception message matches the expected message
+            softAssert.assertEquals(e.getMessage(), expectedErrorMessage);
+        }
+        softAssert.assertAll();
     }
 
     // Testing other types of exceptions
     // Used regular grouped assertion
-    @Test
+    @Test(groups = {"JsonParserTest", "ExceptionsTest"})
     public void shouldThrowExceptions() {
+        SoftAssert softAssert = new SoftAssert();
         File corruptFile = new File("src/test/resources/corrupt.json");
-        assertAll(
-                // Test for JsonSyntaxException when file is corrupt
-                () -> assertThrows(JsonSyntaxException.class, () -> parser.readFromFile(corruptFile)),
-                // Test for NullPointerException when file is null
-                () -> assertThrows(NullPointerException.class, () -> parser.readFromFile(null)),
-                // Test for NullPointerException when cart is null
-                () -> assertThrows(NullPointerException.class, () -> parser.writeToFile(null))
-        );
+
+        // Test for JsonSyntaxException when file is corrupt
+        try {
+            parser.readFromFile(corruptFile);
+            softAssert.fail("Expected JsonSyntaxException to be thrown");
+        } catch (JsonSyntaxException e) {
+            // Exception was thrown, check if it's of expected type
+            softAssert.assertEquals(e.getClass(), JsonSyntaxException.class);
+        }
+
+        // Test for NullPointerException when file is null
+        try {
+            parser.readFromFile(null);
+            softAssert.fail("Expected NullPointerException to be thrown");
+        } catch (NullPointerException e) {
+            // Exception was thrown, check if it's of expected type
+            softAssert.assertEquals(e.getClass(), NullPointerException.class);
+        }
+
+        // Test for NullPointerException when cart is null
+        try {
+            parser.writeToFile(null);
+            softAssert.fail("Expected NullPointerException to be thrown");
+        } catch (NullPointerException e) {
+            // Exception was thrown, check if it's of expected type
+            softAssert.assertEquals(e.getClass(), NullPointerException.class);
+        }
+        softAssert.assertAll();
     }
 }

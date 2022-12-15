@@ -1,0 +1,33 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Test Suite #4 - Shop Testing">
+    <test verbose="2" name="Real Item Tests">
+        <groups>
+            <dependencies>
+                <group name="CartTest" depends-on="RealItemTest"/>
+            </dependencies>
+        </groups>
+        <classes>
+            <class name="shop.RealItemTest"/>
+            <class name="shop.CartTest">
+                <methods>
+                    <include name="testRealCart"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test verbose="2" name="Virtual Item Tests">
+        <groups>
+            <dependencies>
+                <group name="CartTest" depends-on="VirtualItemTest"/>
+            </dependencies>
+        </groups>
+        <classes>
+            <class name="shop.VirtualItemTest"/>
+            <class name="shop.CartTest">
+                <methods>
+                    <include name="testVirtualCart"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

@@ -1,29 +1,26 @@
 package shop;
 
-import org.junit.jupiter.api.*;
+import org.testng.annotations.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.testng.Assert.*;
 
-@Tag("CartTest")
-@DisplayName("Cart Class Tests")
 class CartTest {
     Cart cart;
     RealItem realItem;
     VirtualItem virtualItem;
     final double TAX = 0.2;
 
-    @BeforeEach
+    @BeforeMethod
     public void setupSuite() {
         cart = new Cart("test-cart");
     }
 
-    @AfterEach
+    @AfterMethod
     public void cleanUpSuite() {
         cart = null;
     }
 
-    @DisplayName("Test Cart With Virtual Item")
-    @Test
+    @Test(groups = {"CartTest", "VirtualItemTest"})
     public void testVirtualCart() {
         virtualItem = new VirtualItem();
         virtualItem.setPrice(100);
@@ -33,8 +30,7 @@ class CartTest {
         assertEquals(virtualItem.getPrice() + virtualItem.getPrice() * TAX, cart.getTotalPrice());
     }
 
-    @DisplayName("Test Cart With Real Item")
-    @Test
+    @Test(groups = {"CartTest", "RealItemTest"})
     public void testRealCart() {
         realItem = new RealItem();
         realItem.setPrice(100);

@@ -1,26 +1,23 @@
 package shop;
 
-import org.junit.jupiter.api.*;
+import org.testng.annotations.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.testng.Assert.assertEquals;
 
-@Tag("VirtualItemTest")
-@DisplayName("VirtualItem Class Tests")
 class VirtualItemTest {
     VirtualItem virtualItem;
 
-    @BeforeEach
+    @BeforeTest
     public void setup() {
         virtualItem = new VirtualItem();
     }
 
-    @AfterEach
+    @AfterTest
     public void cleanUp() {
         virtualItem = null;
     }
 
-    @DisplayName("Test Virtual Item Size")
-    @Test
+    @Test(groups = {"VirtualItemTest"})
     public void testVirtualItem() {
         virtualItem = new VirtualItem();
         double expectedSize = 64.32;
