@@ -15,6 +15,10 @@ class CartTest {
     @BeforeEach
     public void setupSuite() {
         cart = new Cart("test-cart");
+        realItem = new RealItem();
+        virtualItem = new VirtualItem();
+        realItem.setPrice(100);
+        virtualItem.setPrice(100);
     }
 
     @AfterEach
@@ -22,11 +26,25 @@ class CartTest {
         cart = null;
     }
 
+    @DisplayName("Test Real Item Deletion")
+    @Test
+    public void testRealItemDeletion() {
+        cart.addRealItem(realItem);
+        cart.deleteRealItem(realItem);
+        assertEquals(0, cart.getTotalPrice());
+    }
+
+    @DisplayName("Test Virtual Item Deletion")
+    @Test
+    public void testVirtualItemDeletion() {
+        cart.addVirtualItem(virtualItem);
+        cart.deleteVirtualItem(virtualItem);
+        assertEquals(0, cart.getTotalPrice());
+    }
+
     @DisplayName("Test Cart With Virtual Item")
     @Test
     public void testVirtualCart() {
-        virtualItem = new VirtualItem();
-        virtualItem.setPrice(100);
         cart.addVirtualItem(virtualItem);
 
         //check that virtual product's price with added tax equals the cart's total price
@@ -36,8 +54,6 @@ class CartTest {
     @DisplayName("Test Cart With Real Item")
     @Test
     public void testRealCart() {
-        realItem = new RealItem();
-        realItem.setPrice(100);
         cart.addRealItem(realItem);
 
         //check that real product's price with added tax equals the cart's total price

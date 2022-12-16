@@ -20,6 +20,14 @@ class JsonParserTest {
         parser = new JsonParser();
     }
 
+    @AfterEach
+    public void cleanUp() {
+        File testFile = new File("src/main/resources/test-cart.json");
+        if (testFile.exists()) {
+            testFile.deleteOnExit();
+        }
+    }
+
     @DisplayName("Should Write To File")
     @Test
     public void shouldWriteToFile() {
@@ -29,8 +37,6 @@ class JsonParserTest {
         File file = new File("src/main/resources/" + cart.getCartName() + ".json");
         // checking that file is not empty
         assertNotEquals(0, file.length());
-        // delete file on exit, otherwise test will pass regardless in future test executions
-        file.deleteOnExit();
     }
 
     @DisplayName("Should Read From File")

@@ -8,10 +8,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("VirtualItem Class Tests")
 class VirtualItemTest {
     VirtualItem virtualItem;
+    static final double EXPECTED_SIZE= 9.99;
 
     @BeforeEach
     public void setup() {
         virtualItem = new VirtualItem();
+        virtualItem.setSizeOnDisk(EXPECTED_SIZE);
     }
 
     @AfterEach
@@ -22,10 +24,6 @@ class VirtualItemTest {
     @DisplayName("Test Virtual Item Size")
     @Test
     public void testVirtualItem() {
-        virtualItem = new VirtualItem();
-        double expectedSize = 64.32;
-        virtualItem.setSizeOnDisk(expectedSize);
-        // checking that the expected size equals the actual size that is returned by size getter
-        assertEquals(expectedSize, virtualItem.getSizeOnDisk());
+        assertTrue(virtualItem.toString().contains("Size on disk: " + EXPECTED_SIZE));
     }
 }
