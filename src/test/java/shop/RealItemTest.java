@@ -2,7 +2,7 @@ package shop;
 
 import org.testng.annotations.*;
 
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 class RealItemTest {
     RealItem realItem;

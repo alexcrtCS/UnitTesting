@@ -17,6 +17,14 @@ class JsonParserTest {
         parser = new JsonParser();
     }
 
+    @AfterMethod
+    public void cleanUp() {
+        File testFile = new File("src/main/resources/test-cart.json");
+        if (testFile.exists()) {
+            testFile.deleteOnExit();
+        }
+    }
+
     @DataProvider(name = "dummyFilePath")
     public Object[][] dummyFileProvider() {
         return new Object[][]{{""}, {"file"}, {"file.json"}, {"file.txt"}, {" file "}};
@@ -30,8 +38,6 @@ class JsonParserTest {
         File file = new File("src/main/resources/" + cart.getCartName() + ".json");
         // checking that file is not empty
         assertNotEquals(0, file.length());
-        // delete file on exit, otherwise test will pass regardless in future test executions
-        file.deleteOnExit();
     }
 
     @Parameters("cartName")
