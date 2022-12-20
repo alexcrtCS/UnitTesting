@@ -1,28 +1,25 @@
 package shop;
 
-import org.junit.jupiter.api.*;
+import org.testng.annotations.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.testng.Assert.assertTrue;
 
-@Tag("VirtualItemTest")
-@DisplayName("VirtualItem Class Tests")
 class VirtualItemTest {
     VirtualItem virtualItem;
     static final double EXPECTED_SIZE= 9.99;
 
-    @BeforeEach
+    @BeforeTest
     public void setup() {
         virtualItem = new VirtualItem();
         virtualItem.setSizeOnDisk(EXPECTED_SIZE);
     }
 
-    @AfterEach
+    @AfterTest
     public void cleanUp() {
         virtualItem = null;
     }
 
-    @DisplayName("Test Virtual Item Size")
-    @Test
+    @Test(groups = {"VirtualItemTest"})
     public void testVirtualItem() {
         assertTrue(virtualItem.toString().contains("Size on disk: " + EXPECTED_SIZE));
     }

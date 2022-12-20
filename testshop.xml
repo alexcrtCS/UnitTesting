@@ -1,0 +1,25 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Test Suite #4 - Shop Testing">
+    <test verbose="2" name="Real Item Tests">
+        <classes>
+            <class name="shop.RealItemTest"/>
+            <class name="shop.CartTest">
+                <methods>
+                    <include name="testRealCart"/>
+                    <include name="testRealItemDeletion"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test verbose="2" name="Virtual Item Tests">
+        <classes>
+            <class name="shop.VirtualItemTest"/>
+            <class name="shop.CartTest">
+                <methods>
+                    <include name="testVirtualCart"/>
+                    <include name="testVirtualItemDeletion"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

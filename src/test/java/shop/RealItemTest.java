@@ -1,28 +1,25 @@
 package shop;
 
-import org.junit.jupiter.api.*;
+import org.testng.annotations.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.testng.Assert.assertTrue;
 
-@Tag("RealItemTest")
-@DisplayName("RealItem Class Tests")
 class RealItemTest {
     RealItem realItem;
     static final double EXPECTED_WEIGHT = 9.99;
 
-    @BeforeEach
+    @BeforeTest
     public void setup() {
         realItem = new RealItem();
         realItem.setWeight(EXPECTED_WEIGHT);
     }
 
-    @AfterEach
+    @AfterTest
     public void cleanUp() {
         realItem = null;
     }
 
-    @DisplayName("Test Real Item Weight")
-    @Test
+    @Test(groups = {"RealItemTest"})
     public void testRealItem() {
         assertTrue(realItem.toString().contains("Weight: " + EXPECTED_WEIGHT));
     }
