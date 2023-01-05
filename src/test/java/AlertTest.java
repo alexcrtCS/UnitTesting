@@ -2,7 +2,6 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -39,28 +38,20 @@ public class AlertTest {
     void jSConfirmAcceptTest() {
         String expectedMessage = "You pressed OK!";
         driver.findElement(CONFIRM_BTN).click();
-        try {
-            Alert alert = driver.switchTo().alert();
-            alert.accept();
-            String alertResult = driver.findElement(ALERT_RESULT).getText();
-            Assertions.assertEquals(expectedMessage, alertResult);
-        } catch (NoAlertPresentException e) {
-            Assertions.fail(e.getMessage());
-        }
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
+        String alertResult = driver.findElement(ALERT_RESULT).getText();
+        Assertions.assertEquals(expectedMessage, alertResult);
     }
 
     @Test
     void jSConfirmDismissTest() {
         String expectedMessage = "You pressed Cancel!";
         driver.findElement(CONFIRM_BTN).click();
-        try {
-            Alert alert = driver.switchTo().alert();
-            alert.dismiss();
-            String alertResult = driver.findElement(ALERT_RESULT).getText();
-            Assertions.assertEquals(expectedMessage, alertResult);
-        } catch (NoAlertPresentException e) {
-            Assertions.fail(e.getMessage());
-        }
+        Alert alert = driver.switchTo().alert();
+        alert.dismiss();
+        String alertResult = driver.findElement(ALERT_RESULT).getText();
+        Assertions.assertEquals(expectedMessage, alertResult);
     }
 
     @AfterEach
