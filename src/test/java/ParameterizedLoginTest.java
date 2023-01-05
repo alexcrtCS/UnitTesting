@@ -1,6 +1,10 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,9 +16,6 @@ import java.time.Duration;
 
 public class ParameterizedLoginTest {
     private final String WEBPAGE = "https://mail.yandex.com/";
-    private final String USERNAME = "seleniumtrainingcs";
-    private final String USERNAME2 = "seleniumtrainingcs2";
-    private final String PASSWORD = "SeleniumTest22&*!#";
     private final By MAIL_LOGIN = By.cssSelector("[type='button']");
     private final By USER_FIELD = By.id("passp-field-login");
     private final By PASS_FIELD = By.id("passp-field-passwd");
@@ -35,15 +36,15 @@ public class ParameterizedLoginTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {USERNAME, USERNAME2})
-    void loginWithAccountsTest(String userId) throws InterruptedException {
+    @CsvSource({"seleniumtrainingcs, Selenium23&*!#", "seleniumtrainingcs2, SeleniumTest22&*!#"})
+    void loginWithAccountsTest(String userId, String password) throws InterruptedException {
         driver.get(WEBPAGE);
         driver.findElement(MAIL_LOGIN).click();
         driver.findElement(USER_FIELD).sendKeys(userId);
         driver.findElement(SIGN_IN_BTN).click();
-        driver.findElement(PASS_FIELD).sendKeys(PASSWORD);
+        driver.findElement(PASS_FIELD).sendKeys(password);
         // Must pause before submitting details to prevent detection of Selenium usage
-        Thread.sleep(6000); // at least 5s are required to pass, else Selenium is flagged as suspicious activity
+        Thread.sleep(6000); // explicit waiter, else Selenium is flagged as suspicious activity
         driver.findElement(SIGN_IN_BTN).click();
         // Added Explicit Wait with custom polling frequency (max 10s at 2s intervals)
         new WebDriverWait(driver, Duration.ofSeconds(10))

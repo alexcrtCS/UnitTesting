@@ -1,5 +1,10 @@
-public class Employee {
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-    public Employee(String name, String position, String office) {
-    }
+@Data
+@AllArgsConstructor
+public class Employee {
+    private String name;
+    private String position;
+    private String office;
 }
