@@ -18,7 +18,7 @@ public class EmployeeTest {
     private final String WEBPAGE = "https://demo.seleniumeasy.com/table-sort-search-demo.html";
     private final By ENTRY_SELECT = By.name("example_length");
     private final By NEXT_BTN = By.id("example_next");
-    private final By TABLE_ROWS = By.xpath("//tr");
+    private final By TABLE_ROWS = By.xpath("//tbody/tr");
     private final By NAME_CELLS = By.xpath("//td[1]");
     private final By POSITION_CELLS = By.xpath("//td[2]");
     private final By OFFICE_CELLS = By.xpath("//td[3]");
@@ -46,9 +46,10 @@ public class EmployeeTest {
         List<Employee> employeeList = new ArrayList<>();
         Select select = new Select(driver.findElement(ENTRY_SELECT));
         select.selectByIndex(0);
-        // Code in do is executed first then condition in while is checked
-        // After next button is disabled will have last execution
-        do {
+
+        boolean enabled = true;
+        while (enabled) {
+            WebElement nextBtn = driver.findElement(NEXT_BTN);
             List<WebElement> rowList = driver.findElements(TABLE_ROWS);
             rowList.forEach(row -> {
                 int actualAge = Integer.parseInt(row.findElement(AGE_CELLS).getText());
@@ -64,9 +65,13 @@ public class EmployeeTest {
                     employeeList.add(employee);
                 }
             });
-            // Clicking next to get the following 10 rows of our table
-            driver.findElement(NEXT_BTN).click();
-        } while (!driver.findElement(NEXT_BTN).getAttribute("class").endsWith("disabled"));
+            if (!nextBtn.getAttribute("class").endsWith("disabled")) {
+                // Clicking next to get the following 10 rows of our table
+                nextBtn.click();
+            } else {
+                enabled = false;
+            }
+        }
         // Testing that after all the above, the list is not empty
         Assertions.assertFalse(employeeList.isEmpty());
     }

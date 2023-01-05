@@ -26,21 +26,17 @@ public class AlertTest {
     }
 
     @Test
-    void JSAlertTest() {
+    void jSAlertTest() {
         String expectedMessage = "I am an alert box!";
         driver.findElement(ALERT_BTN).click();
-        try {
-            Alert alert = driver.switchTo().alert();
-            String alertMessage = alert.getText();
-            alert.accept();
-            Assertions.assertEquals(expectedMessage, alertMessage);
-        } catch (NoAlertPresentException e) {
-            Assertions.fail(e.getMessage());
-        }
+        Alert alert = driver.switchTo().alert();
+        String alertMessage = alert.getText();
+        alert.accept();
+        Assertions.assertEquals(expectedMessage, alertMessage);
     }
 
     @Test
-    void JSConfirmAcceptTest() {
+    void jSConfirmAcceptTest() {
         String expectedMessage = "You pressed OK!";
         driver.findElement(CONFIRM_BTN).click();
         try {
@@ -54,7 +50,7 @@ public class AlertTest {
     }
 
     @Test
-    void JSConfirmDismissTest() {
+    void jSConfirmDismissTest() {
         String expectedMessage = "You pressed Cancel!";
         driver.findElement(CONFIRM_BTN).click();
         try {

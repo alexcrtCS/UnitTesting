@@ -36,7 +36,7 @@ public class UserTest {
 
     // Simple test for checking that user image is displayed
     @Test
-    void UserImageTest() {
+    void userImageTest() {
         driver.findElement(GET_BTN).click();
         // Explicit wait until image is displayed
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(USER_IMG));
@@ -45,7 +45,7 @@ public class UserTest {
 
     // Test checking that user profile elements are displayed
     @Test
-    void UserProfileTest() {
+    void userProfileTest() {
         driver.findElement(GET_BTN).click();
         // Explicit waiter with custom condition that waits until 'loading' text disappears
         new WebDriverWait(driver, Duration.ofSeconds(5)).
