@@ -1,15 +1,13 @@
 package pageclasses;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
-public class LandingPage {
+public class LandingPage extends BasePage {
     private static final String WEBPAGE = "https://mail.yandex.com/";
     private final By MAIL_LOGIN = By.cssSelector("[type='button']");
-    private final WebDriver driver;
 
-    public LandingPage(WebDriver driver) {
-        this.driver = driver;
+    public LandingPage() {
+        super();
     }
 
     public void openLandingPage() {
@@ -24,6 +22,6 @@ public class LandingPage {
         // click button
         driver.findElement(MAIL_LOGIN).click();
         // redirection to login page
-        return new LoginPage(driver);
+        return new LoginPage();
     }
 }
