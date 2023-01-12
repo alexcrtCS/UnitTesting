@@ -7,27 +7,32 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.time.Duration;
 
 public class WebDriverSingleton {
-    private static volatile WebDriverSingleton webDriverSingleton; // volatile so it's always up-to-date
-    private final WebDriver driver;
+    private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     private WebDriverSingleton() {
-        WebDriverManager.getInstance(ChromeDriver.class).setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        // waiter before throwing error at page loading for 10s as it loads slowly
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
     }
 
-    // synchronized method so that multiple threads don't try to access it simultaneously
-    public static synchronized WebDriverSingleton getInstance() {
-        if (webDriverSingleton == null) {
-            webDriverSingleton = new WebDriverSingleton();
+    public static WebDriver getDriver() {
+        if (driver.get() == null) {
+            driver.set(setupDriver());
         }
-        return webDriverSingleton;
+        return driver.get();
     }
 
-    public WebDriver getDriver() {
-        return driver;
+    private static WebDriver setupDriver() {
+        WebDriverManager.getInstance(ChromeDriver.class).setup();
+        WebDriver webDriver = new ChromeDriver();
+        webDriver.manage().window().maximize();
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        // waiter before throwing error at page loading for 10s as it loads slowly
+        webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
+        return webDriver;
+    }
+
+    public static void tearDown() {
+        if (driver.get() != null) {
+            driver.get().quit();
+            driver.remove();
+        }
     }
 }

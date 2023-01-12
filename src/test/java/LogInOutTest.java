@@ -17,8 +17,7 @@ public class LogInOutTest {
 
     @BeforeEach
     public void setup() throws InterruptedException {
-        WebDriverSingleton webDriverSingleton = WebDriverSingleton.getInstance();
-        driver = webDriverSingleton.getDriver();
+        driver = WebDriverSingleton.getDriver();
         // Common steps for all tests to avoid code duplication
         landingPage = new LandingPage(driver);
         landingPage.openLandingPage();
@@ -40,9 +39,6 @@ public class LogInOutTest {
 
     @AfterEach
     public void closeBrowser() {
-        if (driver != null) {
-            driver.quit();
-            driver = null;
-        }
+        WebDriverSingleton.tearDown();
     }
 }
