@@ -1,10 +1,15 @@
 package pageclasses;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class MailPage extends BasePage {
-    private final By USER_ACCOUNT = By.cssSelector("a span.user-account__name");
-    private final By LOGOUT_BTN = By.cssSelector("a[aria-label='Log out']");
+    @FindBy(css = "a span.user-account__name")
+    private WebElement userAccount;
+
+    @FindBy(css = "a[aria-label='Log out']")
+    private WebElement logoutBtn;
 
     public MailPage() {
         super();
@@ -12,13 +17,13 @@ public class MailPage extends BasePage {
 
     public LandingPage logout() {
         // perform logout
-        driver.findElement(USER_ACCOUNT).click();
-        driver.findElement(LOGOUT_BTN).click();
+        userAccount.click();
+        logoutBtn.click();
         // redirection to login page
         return new LandingPage();
     }
 
     public String getUserAccountLabel() {
-        return driver.findElement(USER_ACCOUNT).getText();
+        return userAccount.getText();
     }
 }
