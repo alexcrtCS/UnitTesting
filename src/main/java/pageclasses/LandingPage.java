@@ -1,10 +1,12 @@
 package pageclasses;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class LandingPage extends BasePage {
     private static final String WEBPAGE = "https://mail.yandex.com/";
-    private final By MAIL_LOGIN = By.cssSelector("[type='button']");
+    @FindBy(css = "[type='button']")
+    private WebElement mailLogin;
 
     public LandingPage() {
         super();
@@ -15,12 +17,12 @@ public class LandingPage extends BasePage {
     }
 
     public boolean isSignInDisplayed() {
-        return driver.findElement(MAIL_LOGIN).isDisplayed();
+        return mailLogin.isDisplayed();
     }
 
     public LoginPage clickSignIn() {
         // click button
-        driver.findElement(MAIL_LOGIN).click();
+        mailLogin.click();
         // redirection to login page
         return new LoginPage();
     }

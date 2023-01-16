@@ -1,11 +1,17 @@
 package pageclasses;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends BasePage {
-    private final By USER_FIELD = By.id("passp-field-login");
-    private final By PASS_FIELD = By.id("passp-field-passwd");
-    private final By SIGN_IN_BTN = By.xpath("//*[@id='passp:sign-in']");
+    @FindBy(id = "passp-field-login")
+    private WebElement userField;
+
+    @FindBy(id = "passp-field-passwd")
+    private WebElement passField;
+
+    @FindBy(xpath = "//*[@id='passp:sign-in']")
+    private WebElement signInBtn;
 
     public LoginPage() {
         super();
@@ -23,15 +29,15 @@ public class LoginPage extends BasePage {
     }
 
     private void fillUserField(String username) {
-        driver.findElement(USER_FIELD).sendKeys(username);
+        userField.sendKeys(username);
     }
 
     private void fillPasswordField(String password) {
-        driver.findElement(PASS_FIELD).sendKeys(password);
+        passField.sendKeys(password);
     }
 
     private void clickSignInButton() {
-        driver.findElement(SIGN_IN_BTN).click();
+        signInBtn.click();
     }
 
 }
