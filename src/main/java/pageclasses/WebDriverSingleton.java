@@ -24,7 +24,6 @@ public class WebDriverSingleton {
         WebDriver webDriver = new ChromeDriver();
         webDriver.manage().window().maximize();
         webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        // waiter before throwing error at page loading for 10s as it loads slowly
         webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
         return webDriver;
     }
