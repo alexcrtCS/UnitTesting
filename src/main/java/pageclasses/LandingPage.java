@@ -21,9 +21,7 @@ public class LandingPage extends BasePage {
     }
 
     public LoginPage clickSignIn() {
-        // click button
         mailLogin.click();
-        // redirection to login page
         return new LoginPage();
     }
 }

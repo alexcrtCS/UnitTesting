@@ -7,24 +7,25 @@ import pageclasses.LoginPage;
 import pageclasses.MailPage;
 import pageclasses.WebDriverSingleton;
 
+import java.io.IOException;
+
 public class LogInOutTest {
     private final String USERNAME = "seleniumtrainingcs";
-    private final String PASSWORD = "Selenium23&*!#";
+    private final String PASSWORD = "Selenium23&*!#&";
     private LandingPage landingPage;
     private MailPage mailPage;
 
     @BeforeEach
     public void setup() throws InterruptedException {
-        // Common steps for all tests to avoid code duplication
         landingPage = new LandingPage();
         landingPage.openLandingPage();
         LoginPage loginPage = landingPage.clickSignIn();
         mailPage = loginPage.login(USERNAME, PASSWORD);
     }
 
-    // Both tests in same class due to similar steps and feature under test
     @Test
-    public void loginTest() {
+    public void loginTest() throws IOException {
+        mailPage.takeScreenshot();
         Assertions.assertEquals(USERNAME, mailPage.getUserAccountLabel());
     }
 

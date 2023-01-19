@@ -24,7 +24,6 @@ public class LoginPage extends BasePage {
         fillPasswordField(password);
         Thread.sleep(6000); // to prevent Selenium usage detection
         clickSignInButton();
-        // redirection to mail page
         return new MailPage();
     }
 
