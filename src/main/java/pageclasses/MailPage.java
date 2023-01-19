@@ -8,9 +8,10 @@ import org.openqa.selenium.support.FindBy;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 public class MailPage extends BasePage {
-    private static final String SCREENSHOT_PATH = "src/test/resources/mail.png";
+    private static final String SCREENSHOT_PATH = "src/test/resources/";
 
     @FindBy(css = "a span.user-account__name")
     private WebElement userAccount;
@@ -29,8 +30,10 @@ public class MailPage extends BasePage {
     }
 
     public void takeScreenshot() throws IOException {
+        Date date = new Date();
+        String screenshotName = date.toString().replace(":", "-") + ".png";
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(screenshot, new File(SCREENSHOT_PATH));
+        FileUtils.copyFile(screenshot, new File(SCREENSHOT_PATH + screenshotName));
     }
 
     public String getUserAccountLabel() {

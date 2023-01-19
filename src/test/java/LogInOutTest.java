@@ -25,8 +25,8 @@ public class LogInOutTest {
 
     @Test
     public void loginTest() throws IOException {
-        Assertions.assertEquals(USERNAME, mailPage.getUserAccountLabel());
         mailPage.takeScreenshot();
+        Assertions.assertEquals(USERNAME, mailPage.getUserAccountLabel());
     }
 
     @Test
