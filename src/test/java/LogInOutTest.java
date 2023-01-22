@@ -1,13 +1,10 @@
-import org.junit.jupiter.api.AfterEach;
+import io.qameta.allure.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pageclasses.LandingPage;
 import pageclasses.LoginPage;
 import pageclasses.MailPage;
-import pageclasses.WebDriverSingleton;
-
-import java.io.IOException;
 
 public class LogInOutTest {
     private final String USERNAME = "seleniumtrainingcs";
@@ -24,19 +21,23 @@ public class LogInOutTest {
     }
 
     @Test
-    public void loginTest() throws IOException {
-        mailPage.takeScreenshot();
+    @Epic("Yandex Mail - Account")
+    @Story("Account Login")
+    @Feature("Ability to Login")
+    @AllureId("T1")
+    @Description("Check if user can successfully login")
+    public void loginTest() {
         Assertions.assertEquals(USERNAME, mailPage.getUserAccountLabel());
     }
 
     @Test
+    @Epic("Yandex Mail - Account")
+    @Story("Account Logout")
+    @Feature("Ability to Logout")
+    @AllureId("T2")
+    @Description("Check if user can successfully logout")
     public void logoutTest() {
         landingPage = mailPage.logout();
         Assertions.assertTrue(landingPage.isSignInDisplayed());
-    }
-
-    @AfterEach
-    public void closeBrowser() {
-        WebDriverSingleton.tearDown();
     }
 }

@@ -18,7 +18,6 @@ public class LoginPage extends BasePage {
     }
 
     public MailPage login(String username, String password) throws InterruptedException {
-        // perform login
         fillUserField(username);
         clickSignInButton();
         fillPasswordField(password);
