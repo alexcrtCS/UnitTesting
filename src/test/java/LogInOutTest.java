@@ -5,8 +5,9 @@ import org.junit.jupiter.api.Test;
 import pageclasses.LandingPage;
 import pageclasses.LoginPage;
 import pageclasses.MailPage;
+import util.SetupTest;
 
-public class LogInOutTest {
+public class LogInOutTest extends SetupTest {
     private final String USERNAME = "seleniumtrainingcs";
     private final String PASSWORD = "Selenium23&*!#&";
     private LandingPage landingPage;
@@ -27,7 +28,7 @@ public class LogInOutTest {
     @AllureId("T1")
     @Description("Check if user can successfully login")
     public void loginTest() {
-        Assertions.assertEquals(USERNAME, mailPage.getUserAccountLabel());
+        Assertions.assertEquals(PASSWORD, mailPage.getUserAccountLabel());
     }
 
     @Test
@@ -38,6 +39,6 @@ public class LogInOutTest {
     @Description("Check if user can successfully logout")
     public void logoutTest() {
         landingPage = mailPage.logout();
-        Assertions.assertTrue(landingPage.isSignInDisplayed());
+        Assertions.assertFalse(landingPage.isSignInDisplayed());
     }
 }
