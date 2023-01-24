@@ -28,7 +28,7 @@ public class LogInOutTest extends SetupTest {
     @AllureId("T1")
     @Description("Check if user can successfully login")
     public void loginTest() {
-        Assertions.assertEquals(PASSWORD, mailPage.getUserAccountLabel());
+        Assertions.assertEquals(USERNAME, mailPage.getUserAccountLabel());
     }
 
     @Test
@@ -39,6 +39,6 @@ public class LogInOutTest extends SetupTest {
     @Description("Check if user can successfully logout")
     public void logoutTest() {
         landingPage = mailPage.logout();
-        Assertions.assertFalse(landingPage.isSignInDisplayed());
+        Assertions.assertTrue(landingPage.isSignInDisplayed());
     }
 }
