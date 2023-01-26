@@ -11,7 +11,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import pageclasses.WebDriverSingleton;
 
 @ExtendWith(FailedTestWatcher.class)
-public class SetupTest {
+public class BaseTest {
     protected WebDriver driver;
     protected static String browserInformation;
     protected static byte[] screenshot;

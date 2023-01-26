@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 import pageclasses.LandingPage;
 import pageclasses.LoginPage;
 import pageclasses.MailPage;
-import util.SetupTest;
+import util.BaseTest;
 
-public class LogInOutTest extends SetupTest {
+@Epic("Yandex Mail - Account")
+@Story("Account Login & Logout")
+public class LogInOutTest extends BaseTest {
     private final String USERNAME = "seleniumtrainingcs";
     private final String PASSWORD = "Selenium23&*!#&";
     private LandingPage landingPage;
@@ -22,8 +24,6 @@ public class LogInOutTest extends SetupTest {
     }
 
     @Test
-    @Epic("Yandex Mail - Account")
-    @Story("Account Login")
     @Feature("Ability to Login")
     @AllureId("T1")
     @Description("Check if user can successfully login")
@@ -32,8 +32,6 @@ public class LogInOutTest extends SetupTest {
     }
 
     @Test
-    @Epic("Yandex Mail - Account")
-    @Story("Account Logout")
     @Feature("Ability to Logout")
     @AllureId("T2")
     @Description("Check if user can successfully logout")
