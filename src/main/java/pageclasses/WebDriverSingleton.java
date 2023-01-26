@@ -1,13 +1,17 @@
 package pageclasses;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 
 public class WebDriverSingleton {
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    private static final String GRID_URL = "http://localhost:4444/wd/hub";
 
     private WebDriverSingleton() {
     }
@@ -20,8 +24,16 @@ public class WebDriverSingleton {
     }
 
     private static WebDriver setupDriver() {
-        WebDriverManager.getInstance(ChromeDriver.class).setup();
-        WebDriver webDriver = new ChromeDriver();
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setBrowserName("chrome");
+        capabilities.setPlatform(Platform.WINDOWS);
+        URL url;
+        try {
+            url = new URL(GRID_URL);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        WebDriver webDriver = new RemoteWebDriver(url, capabilities);
         webDriver.manage().window().maximize();
         webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
