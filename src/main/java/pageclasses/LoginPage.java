@@ -4,30 +4,28 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends BasePage {
-    @FindBy(id = "passp-field-login")
-    private WebElement userField;
+    @FindBy(id = "email")
+    private WebElement emailField;
 
-    @FindBy(id = "passp-field-passwd")
+    @FindBy(id = "pass")
     private WebElement passField;
 
-    @FindBy(xpath = "//*[@id='passp:sign-in']")
+    @FindBy(id = "send2")
     private WebElement signInBtn;
 
     public LoginPage() {
         super();
     }
 
-    public MailPage login(String username, String password) throws InterruptedException {
-        fillUserField(username);
-        clickSignInButton();
+    public LandingPage login(String email, String password) {
+        fillEmailField(email);
         fillPasswordField(password);
-        Thread.sleep(6000); // to prevent Selenium usage detection
         clickSignInButton();
-        return new MailPage();
+        return new LandingPage();
     }
 
-    private void fillUserField(String username) {
-        userField.sendKeys(username);
+    private void fillEmailField(String email) {
+        emailField.sendKeys(email);
     }
 
     private void fillPasswordField(String password) {
@@ -37,5 +35,4 @@ public class LoginPage extends BasePage {
     private void clickSignInButton() {
         signInBtn.click();
     }
-
 }
