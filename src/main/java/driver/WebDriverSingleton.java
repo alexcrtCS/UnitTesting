@@ -2,6 +2,7 @@ package driver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.SneakyThrows;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -23,28 +24,18 @@ public class WebDriverSingleton {
 
     public static WebDriver getDriver() {
         if (driver.get() == null) {
-            driver.set(setupDriver(ENVIRONMENT, BROWSER));
+            driver.set(setupDriver());
         }
         return driver.get();
     }
 
-    private static WebDriver setupDriver(String environment, String browser) {
-        Capabilities capabilities = BrowserCapabilities.getBrowserCapabilities(browser);
-        if (environment.equals("local")) {
-            return getLocalInstance(browser);
-        }
-        return getRemoteInstance(REMOTE, capabilities);
-    }
-
     @SneakyThrows
-    private static RemoteWebDriver getRemoteInstance(String remote, Capabilities capabilities) {
-        switch (remote) {
-            case "saucelabs":
-                return new RemoteWebDriver(new URL(SAUCE_URL), capabilities);
-            case "grid":
-                return new RemoteWebDriver(new URL(GRID_URL), capabilities);
+    private static WebDriver setupDriver() {
+        Capabilities capabilities = BrowserCapabilities.getBrowserCapabilities(BROWSER);
+        if (StringUtils.isEmpty(REMOTE)) {
+            return getLocalInstance(BROWSER);
         }
-        return null;
+        return new RemoteWebDriver(new URL(REMOTE), Objects.requireNonNull(capabilities));
     }
 
     public static WebDriver getLocalInstance(String browser) {

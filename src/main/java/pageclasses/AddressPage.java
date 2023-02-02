@@ -38,16 +38,15 @@ public class AddressPage extends BasePage {
         super();
     }
 
-    public void addNewAddress() {
+    public void addNewAddress(Address address) {
         if (isAddNewAddressBtnDisplayed()) {
             addNewAddressBtn.click();
         }
-        fillAddressFields();
+        fillAddressFields(address);
         saveAddressBtn.click();
     }
 
-    public void fillAddressFields() {
-        Address address = new Address();
+    public void fillAddressFields(Address address) {
         phoneNumberField.sendKeys(address.getPhoneNumber());
         streetAddressField.sendKeys(address.getStreetAddress());
         cityField.sendKeys(address.getCity());

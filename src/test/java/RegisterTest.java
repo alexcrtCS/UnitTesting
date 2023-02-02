@@ -1,3 +1,4 @@
+import helpers.User;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ public class RegisterTest extends BaseTest {
     @Description("Check if new user is successfully registered")
     public void registerUserTest() {
         RegisterPage registerPage = landingPage.clickCreateAnAccountButton();
-        AccountPage accountPage = registerPage.registerAccount();
+        AccountPage accountPage = registerPage.registerAccount(new User().createFakeUser());
         Assertions.assertTrue(accountPage.isRegistrationMsgDisplayed());
     }
 }

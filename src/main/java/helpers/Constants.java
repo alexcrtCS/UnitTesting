@@ -1,15 +1,8 @@
 package helpers;
 
-import org.apache.commons.lang3.StringUtils;
-
 public class Constants {
-    public static final String BROWSER = StringUtils.defaultString(System.getProperty("browser"), "chrome");
-    public static final String ENVIRONMENT = StringUtils.defaultString(System.getProperty("environment"), "local");
-    public static final String REMOTE = StringUtils.defaultString(System.getProperty("remote"), "saucelabs");
-    public static final String GRID_URL = "http://localhost:4444/wd/hub";
-    private static final String USERNAME = "alexcrtCS";
-    private static final String USER_KEY = "2fd5dab0-128a-45af-bd39-04a6d2de11b0";
-    public static final String SAUCE_URL = "https://" + USERNAME + ":" + USER_KEY + "@ondemand.eu-central-1.saucelabs.com:443/wd/hub";
+    public static final String BROWSER = System.getProperty("browser", "chrome");
+    public static final String REMOTE = System.getProperty("remote");
     public static final String WEBPAGE = "https://magento.softwaretestingboard.com/";
     public static final String CART_URL = "https://magento.softwaretestingboard.com/checkout/cart/";
     public static final String EMAIL = "testseleniumcs@cstc.com";

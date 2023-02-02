@@ -1,3 +1,4 @@
+import helpers.Address;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -25,7 +26,7 @@ public class AddressTest extends BaseTest {
     public void addNewAddressTest() {
         AccountPage accountPage = landingPage.clickMyAccountBtn();
         AddressPage addressPage = accountPage.clickAddressBookBtn();
-        addressPage.addNewAddress();
+        addressPage.addNewAddress(new Address().createFakeAddress());
         Assertions.assertTrue(addressPage.isAddressSavedMsgDisplayed());
     }
 }

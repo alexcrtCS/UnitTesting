@@ -23,14 +23,13 @@ public class RegisterPage extends BasePage {
     @FindBy(className = "submit")
     private WebElement createAnAccountBtn;
 
-    public AccountPage registerAccount() {
-        fillRegistrationFields();
+    public AccountPage registerAccount(User user) {
+        fillRegistrationFields(user);
         createAnAccountBtn.click();
         return new AccountPage();
     }
 
-    public void fillRegistrationFields() {
-        User user = new User();
+    public void fillRegistrationFields(User user) {
         firstNameField.sendKeys(user.getFirstName());
         lastNameField.sendKeys(user.getLastName());
         emailField.sendKeys(user.getEmail());
