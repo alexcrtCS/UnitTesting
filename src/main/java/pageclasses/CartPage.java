@@ -22,17 +22,17 @@ public class CartPage extends BasePage {
     @FindBy(css = ".subtotal .cart-price .price")
     private List<WebElement> productSubtotals;
 
-    @FindBy(css = ".sub .price")
-    private WebElement cartSubtotal;
-
-    @FindBy(css = ".grand .price")
-    private WebElement grandTotal;
-
     @FindBy(css = "td[data-th='Discount'] .price")
     private List<WebElement> discount;
 
     @FindBy(css = ".totals-tax .price")
     private List<WebElement> tax;
+
+    @FindBy(css = ".sub .price")
+    private WebElement cartSubtotal;
+
+    @FindBy(css = ".grand .price")
+    private WebElement grandTotal;
 
     public CartPage() {
         super();
@@ -83,18 +83,14 @@ public class CartPage extends BasePage {
 
     public boolean isTotalValid() {
         double totalValue = extractDouble(grandTotal.getText());
-        System.out.println(totalValue);
         double subtotalValue = extractDouble(cartSubtotal.getText());
-        System.out.println(subtotalValue);
         double discountValue = 0;
         double taxValue = 0;
         if (!discount.isEmpty()) {
             discountValue = extractDouble(discount.get(0).getText());
-            System.out.println(discountValue);
         }
         if (!tax.isEmpty()) {
             taxValue = extractDouble(tax.get(0).getText());
-            System.out.println(taxValue);
         }
         return subtotalValue - discountValue + taxValue == totalValue;
     }
